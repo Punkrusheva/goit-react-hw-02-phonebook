@@ -1,28 +1,46 @@
 import React, { Component } from 'react';
 import Layout from './Layout';
 import ContactList from './ContactList/ContactList'
-//import contacts from '../Phonebook/phonebook.json';
-//import contacts1 from '../Phonebook/phonebook1.json';
-import PhonebookForm from './PhonebookForm/PhonebookForm';
-import createContact from "../utils/create-contact";
+
+import ContactForm from './ContactForm/ContactForm';
+//import createContact from "../utils/create-contact";
+//import { v4 as uuidv4 } from 'uuid';
 
 export default class App extends Component {
   state = {
     contacts: [],
+    name: '',
+    number: ''
   };
 
-  addContact = () => {
+ /* addContact = () => {
     const contact = createContact();
+    //console.log(createContact());
     
-    console.log(contact);
-
     this.setState(prevState => {
       return {
         contacts: [...prevState.contacts, contact],
       };
     });
   };
-
+  */
+   /*createContact({ name, number, uuidv4 }) {
+    return {
+      id: uuidv4(),
+      number: { number },
+      name: { name }
+    };
+    };*/ 
+  handleChange = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({ [name]: value });
+  };
+   
+  handleSubmit = e => { 
+    e.preventDefault();
+    console.log(this.state);
+  };
+    
   removeContact = contactId => {
     this.setState(prevState => {
       return {
@@ -37,11 +55,20 @@ export default class App extends Component {
     return (
       <>
         <Layout title="Phonebook">
-          <PhonebookForm onAddContact={this.addContact} contacts={contacts} />
+          <ContactForm
+            onAddContact={this.addContact}
+            avalue={this.state.name}
+            onNameInput={this.handleChange}
+            bvalue={this.state.number}
+            onNumberInput={this.handleChange}
+            onSubmit={this.handleSubmit}
+            contacts={contacts} />
         </Layout>
 
         {contacts.length > 0 && (<Layout title="Contacts">
-          <ContactList onRemoveContact={this.removeContact} contacts={contacts} />
+          <ContactList
+            onRemoveContact={this.removeContact}
+            contacts={contacts} />
         </Layout>)}
       </>
     )
