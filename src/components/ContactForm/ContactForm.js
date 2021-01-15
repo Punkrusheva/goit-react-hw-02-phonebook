@@ -1,50 +1,69 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {Component} from 'react';
+import shortid from 'shortid';
 import styles from './ContactForm.module.css';
 
-function ContactForm({ onSubmit, onNameInput, onNumberInput, avalue, bvalue }) { 
+class ContactForm extends Component {
+  state = {
+    name: '',
+    number: '',
+  };
+ 
+  nameInputId = shortid.generate();
+  numberInputId = shortid.generate();
+
+  handleChange = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({ [name]: value });
+  };
+   
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.onSubmit(this.state);
+    this.reset();
+  };
+    
+  reset = () => {
+    this.setState({ name: '', number: '' });
+  };
+
+  removeContact = contactId => {
+    this.setState(prevState => {
+      return {
+        contacts: prevState.contacts.filter(({ id }) => id !== contactId),
+      };
+    });
+  };
+  render() {
     return (
-        <form className={styles.box} onSubmit={onSubmit}>
-        <label htmlFor="" className={styles.name}>
+      <form className={styles.box} onSubmit={this.handleSubmit} >
+        <label htmlFor={this.nameInputId} className={styles.name}>
           Name
           <input
             type='text'
             name='name'
-            value={avalue}
-            onChange={onNameInput}
+            id={this.nameInputId}
+            value={this.state.name}
+            onChange={this.handleChange}
             className={styles.input}
             placeholder='Enter contact name' />
-            </label>
-        <label htmlFor="" className={styles.number}>
+        </label>
+        <label htmlFor={this.numberInputId} className={styles.number}>
           Number
           <input
             type='text'
             name='number'
-            value={bvalue}
-            onChange={onNumberInput}
+            id={this.numberInputId}
+            value={this.state.number}
+            onChange={this.handleChange}
             className={styles.input}
             placeholder='Enter contact number' />
-            </label>
-            <button type='submit' className={styles.button}>
-                Add contact
+        </label>
+        <button type='submit' className={styles.button}>
+          Add contact
             </button>
-        </form>
-    ) 
+      </form>
+    );
+  }
 }
 
-ContactForm.defaultProps = {
-  name: '',
-  id: '',
-  number: '',
-};
-
-ContactForm.propTypes = {
-  name: PropTypes.string,
-  id: PropTypes.string,
-  number: PropTypes.string,
-};
-
 export default ContactForm;
-
-
-/**onClick={onAddContact}  */

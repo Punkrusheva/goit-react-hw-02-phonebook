@@ -9,9 +9,7 @@ import ContactForm from './ContactForm/ContactForm';
 export default class App extends Component {
   state = {
     contacts: [],
-    name: '',
-    number: ''
-  };
+  }
 
  /* addContact = () => {
     const contact = createContact();
@@ -31,24 +29,10 @@ export default class App extends Component {
       name: { name }
     };
     };*/ 
-  handleChange = e => {
-    const { name, value } = e.currentTarget;
-    this.setState({ [name]: value });
+  formSubmitHandler = data => {
+    console.log(data);
   };
-   
-  handleSubmit = e => { 
-    e.preventDefault();
-    console.log(this.state);
-  };
-    
-  removeContact = contactId => {
-    this.setState(prevState => {
-      return {
-        contacts: prevState.contacts.filter(({ id }) => id !== contactId),
-      };
-    });
-  };
-
+  
   render() {
     const { contacts } = this.state;
 
@@ -56,12 +40,13 @@ export default class App extends Component {
       <>
         <Layout title="Phonebook">
           <ContactForm
-            onAddContact={this.addContact}
+            onSubmit={this.formSubmitHandler}
+            //onAddContact={this.addContact}
             avalue={this.state.name}
             onNameInput={this.handleChange}
             bvalue={this.state.number}
             onNumberInput={this.handleChange}
-            onSubmit={this.handleSubmit}
+            
             contacts={contacts} />
         </Layout>
 
