@@ -28,7 +28,7 @@ export default class App extends Component {
   
   formSubmitHandler = ({ name, number }) => {
     const { contacts } = this.state;
-    console.log(contacts);
+   
     this.contactId = shortid.generate();
     const contact = {
       id: this.contactId,
@@ -36,48 +36,22 @@ export default class App extends Component {
       number,
     };
     if (contact.name !== '') {
-        console.log(contact);
+      if (this.state.contacts.find(contact => contact.name === name))
+      { alert(`${contact.name} is already in contacts`); }
+      else {
         this.setState(prevState => {
           return {
             contacts: [...prevState.contacts, contact],
-          };
+          }
         });
-    } 
-  };
-
-  /*preventDoubleContacts = () => {
-    const { contacts, contact } = this.state;
-    const normalizedFilter = contact.toLowerCase().trim();
-   console.log(contacts.find(contact =>
-      contact.name.toLowerCase().includes(contact.toLowerCase().trim())
-    ));
-  }*/
+      };
+    }
+  }
 
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
   };
-
-  /*filterSubmitHandler = ({ filter }) => {
-    const filterTrim = filter.trim();
-    
-    for (let i = 0; i < this.state.contacts.length; i++) {
-      const element = this.state.contacts[i].name;
-      //console.log(element);
-      if (element.includes({ filterTrim })) {
-        console.log(element.includes({ filterTrim }));
-      }
-      return {
-        contacts: [...element],
-      }
-       } else {console.log('нет')}
-    }*/
-        //
-       /*this.setState(prevState => {
-          return {
-            filterContacts: [...prevState.contacts.filter({filter})],
-          };
-        });*/
-    
+   
   removeContact = contactId => {
     this.setState(prevState => {
       return {
