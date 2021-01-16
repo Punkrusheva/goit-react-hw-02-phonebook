@@ -26,13 +26,6 @@ class ContactForm extends Component {
     this.setState({ name: '', number: '' });
   };
 
-  removeContact = contactId => {
-    this.setState(prevState => {
-      return {
-        contacts: prevState.contacts.filter(({ id }) => id !== contactId),
-      };
-    });
-  };
   render() {
     return (
       <form className={styles.box} onSubmit={this.handleSubmit} >
