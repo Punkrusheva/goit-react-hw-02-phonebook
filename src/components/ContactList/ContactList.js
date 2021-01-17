@@ -10,7 +10,12 @@ function ContactList({ contacts, onRemoveContact }) {
           <li key={id} className={styles.item}>
             <p className={styles.name}>{name}</p>
             <p className={styles.number}>{number}</p>
-<button type='button' onClick={() => onRemoveContact(id)} className={styles.button}>Delete</button>
+            <button
+              type='button'
+              onClick={() => onRemoveContact(id)}
+              className={styles.button}>
+              Delete
+            </button>
             <section className={styles.actions}>
             </section>
           </li>
@@ -21,11 +26,13 @@ function ContactList({ contacts, onRemoveContact }) {
 }
 
 ContactList.defaultProps = {
+  number: '',
   name: '',
   id: ''
 };
 
 ContactList.propTypes = {
+  number: PropTypes.string,
   name: PropTypes.string,
   id : PropTypes.string
 };
