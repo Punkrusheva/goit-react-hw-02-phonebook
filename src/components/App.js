@@ -16,8 +16,6 @@ export default class App extends Component {
     ]
   }
  
-  filterInputId = shortid.generate();
-
   handleChange = e => {
     e.preventDefault();
     const { name, value } = e.currentTarget;
@@ -78,18 +76,13 @@ export default class App extends Component {
         <Layout title="Phonebook">
           <ContactForm
             onSubmit={this.formSubmitHandler}
-            avalue={this.state.name}
-            onNameInput={this.handleChange}
-            bvalue={this.state.number}
-            onNumberInput={this.handleChange}
-            contacts={contacts} />
+         />
         </Layout>
 
         {contacts.length > 0 && (<Layout title="Contacts">
           <ContactFilter
             onChange={this.changeFilter}
             value={filter}
-            onFilterInput={this.handleChange}
           ></ContactFilter>
           <ContactList
             onRemoveContact={this.removeContact}
